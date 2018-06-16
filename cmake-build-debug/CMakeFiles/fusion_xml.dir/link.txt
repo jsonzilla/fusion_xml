@@ -1,0 +1,1 @@
+/usr/bin/c++  -fexceptions -g   CMakeFiles/fusion_xml.dir/main.cpp.o CMakeFiles/fusion_xml.dir/FusionXML.cpp.o  -o fusion_xml 
