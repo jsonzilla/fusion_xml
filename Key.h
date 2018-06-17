@@ -19,8 +19,8 @@ public:
   bool Unify() const { return unify; };
 
 private:
-  S name{ C("") };
-  S id{ C("") };
+  S name;
+  S id;
   bool unify{ false };
 };
 

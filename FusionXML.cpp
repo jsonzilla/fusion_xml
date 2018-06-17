@@ -1,3 +1,6 @@
+#ifndef FUSION_XML_FUSIONXML_CPP
+#define FUSION_XML_FUSIONXML_CPP
+
 #include "FusionXML.h"
 
 using namespace rapidxml;
@@ -105,3 +108,5 @@ void FusionXML<S, C>::EnumerateNodes(const Node *_node, KeySet& keys, NodeMultiM
     }
   }
 }
+
+#endif

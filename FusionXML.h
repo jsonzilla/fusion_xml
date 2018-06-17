@@ -14,7 +14,7 @@ class FusionXML {
 public:
   using Document = rapidxml::xml_document<C>;
 
-  FusionXML() = default;
+  FusionXML() = delete;
   explicit FusionXML(const S& idFilter) : idFilter(idFilter) {};
   virtual ~FusionXML() = default;
 
@@ -35,7 +35,7 @@ private:
   void Union(const Node *a, const Node *b, Node *c);
   void UnionAtributes(const Node *a, Node *b);
 
-  S idFilter { C("id") };
+  S idFilter;
   Document* doc = nullptr;
 };
 

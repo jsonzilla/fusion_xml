@@ -1,0 +1,22 @@
+<ROOT ver="1.0" id="0101" code="beta">
+	<A/>
+	<B/>
+	<C>
+		<CA/>
+		<CB/>
+	</C>
+	<D>
+		<DA/>
+		<DB/>
+		<DC/>
+	</D>
+	<F id="0101">
+		<FA id="0101" attr="at" otherAttr="bt"/>
+		<FB>
+			<FBA/>
+		</FB>
+		<FB/>
+	</F>
+	<G/>
+</ROOT>
+
