@@ -1,3 +1,0 @@
-/github/fusion_xml/cmake-build-debug/CMakeFiles/edit_cache.dir
-/github/fusion_xml/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/github/fusion_xml/cmake-build-debug/CMakeFiles/fusion_xml.dir
