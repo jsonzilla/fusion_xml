@@ -7,68 +7,35 @@
 
 #include "rapidxml/rapidxml.hpp"
 
-typedef wchar_t Char;
-typedef std::wstring String;
+#include "Key.h"
 
-class Key {
-public:
-  Key() = default;
-  Key(const String& _name) : name(_name) {};
-  Key(const String _name, const String& _id, bool _unify) : name(_name), id(_id), unify(_unify) {};
-  ~Key() = default;
-  bool operator<(const Key& k) const { return name < k.name || (name == k.name && id < k.id); };
-  bool operator==(const Key& k) const { return name == k.name && id == k.id && unify == k.unify; };
-  const String& Name() const { return name; };
-  const String& ID() const { return id; };
-  bool Unify() const { return unify; };
-
-private:
-  String name{ L"" };
-  String id{ L"" };
-  bool unify{ false };
-};
-
-namespace std {
-  template <>
-  struct hash<Key> : public unary_function<Key, size_t> {
-    size_t operator()(const Key& value) const {
-      return std::hash<String>{}(value.Name() + value.ID());
-    }
-  };
-
-  template <>
-  struct equal_to<Key> : public unary_function<Key, bool> {
-    bool operator()(const Key& x, const Key& y) const {
-      return x == y;
-    }
-  };
-}
-
+template <typename S, typename C>
 class FusionXML {
 public:
-  using Document = rapidxml::xml_document<Char>;
-  using Node = rapidxml::xml_node<Char>;
-  using Atribute = rapidxml::xml_attribute<Char>;
-  using NodeAtributeMap = std::unordered_map<String, Atribute*>;
-  using NodeMultiMap = std::unordered_multimap<Key, const Node*>;
-  using KeySet = std::unordered_set<Key>;
+  using Document = rapidxml::xml_document<C>;
 
-  FusionXML();
-  explicit FusionXML(const String& idFilter);
-  virtual ~FusionXML();
+  FusionXML() = default;
+  explicit FusionXML(const S& idFilter) : idFilter(idFilter) {};
+  virtual ~FusionXML() = default;
 
-  rapidxml::xml_document<Char>* Union(const Document &a, const Document &b);
+  void Union(const Document &a, const Document &b, Document &c);
 
+private:
+  using Atribute = rapidxml::xml_attribute<C>;
+  using NodeAtributeMap = std::unordered_map<S, Atribute*>;
+  using KeyType = Key<S, C>;
+  using Node = rapidxml::xml_node<C>;
+  using NodeMultiMap = std::unordered_multimap<Key<S, C>, const Node*>;
+  using KeySet = std::unordered_set<Key<S, C>>;
+
+  void Append(const KeyType &k, NodeMultiMap& map, Node *c);
+  void UnifyAppend(const KeyType &k, NodeMultiMap& map, Node *c);
+  void EnumerateAtributes(const Node* a, NodeAtributeMap& unionMap) const;
+  void EnumerateNodes(const Node *node, KeySet& keys, NodeMultiMap &map) const;
   void Union(const Node *a, const Node *b, Node *c);
   void UnionAtributes(const Node *a, Node *b);
 
-private:
-  void Append(const Key &k, NodeMultiMap& map, Node *c);
-  void UnifyAppend(const Key &k, NodeMultiMap& map, Node *c);
-  void EnumerateAtributes(const Node* a, NodeAtributeMap& unionMap) const;
-  void EnumerateNodes(const Node *node, KeySet& keys, NodeMultiMap &map) const;
-
-  String idFilter{ L"id" };
+  S idFilter { C("id") };
   Document* doc = nullptr;
 };
 

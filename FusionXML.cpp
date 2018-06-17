@@ -2,39 +2,21 @@
 
 using namespace rapidxml;
 
-FusionXML::FusionXML() {
-}
-
-FusionXML::FusionXML(const String &idFilter) : idFilter(idFilter) {
-}
-
-FusionXML::~FusionXML() {
-}
-
-rapidxml::xml_document<Char>* FusionXML::Union(const Document& a, const Document& b) {
-  delete doc;
-  doc = new Document();
+template <typename S, typename C>
+void FusionXML<S, C>::Union(const Document& a, const Document& b, Document& c) {
+  doc = nullptr;
+  doc = &c;
   const Node *aNode = a.first_node();
   const Node *bNode = b.first_node(); //deve encontrar primeiramente uma raiz em comum
   auto root = doc->allocate_node(node_element, aNode->name());
   UnionAtributes(aNode, root);
   UnionAtributes(bNode, root);
   Union(aNode->first_node(), bNode->first_node(), root);
-  doc->append_node(root);
-
-  // clean empty names
-  //Node* aa = doc->first_node();
-  //while (aa != nullptr) {
-  //  if (wcscmp(aa->name(), L"") == 0) {
-  //    doc->remove_node(aa);
-  //  }
-  //  aa = aa->next_sibling();
-  //}
-
-  return doc;
+  c.append_node(root);
 }
 
-void FusionXML::Union(const Node *a, const Node *b, Node *c) {
+template <typename S, typename C>
+void FusionXML<S, C>::Union(const Node *a, const Node *b, Node *c) {
   NodeMultiMap map;
   KeySet keys;
   EnumerateNodes(a, keys, map);
@@ -50,7 +32,8 @@ void FusionXML::Union(const Node *a, const Node *b, Node *c) {
   }
 }
 
-void FusionXML::Append(const Key &k, NodeMultiMap& map, Node *c) {
+template <typename S, typename C>
+void FusionXML<S, C>::Append(const KeyType &k, NodeMultiMap& map, Node *c) {
   auto listNodes = map.equal_range(k);
   for (auto it = listNodes.first; it != listNodes.second; ++it) {
     if (auto node = it->second) {
@@ -59,7 +42,8 @@ void FusionXML::Append(const Key &k, NodeMultiMap& map, Node *c) {
   }
 }
 
-void FusionXML::UnifyAppend(const Key &k, NodeMultiMap& map, Node *c) {
+template <typename S, typename C>
+void FusionXML<S, C>::UnifyAppend(const KeyType &k, NodeMultiMap& map, Node *c) {
   if (map.count(k) > 1) {
     auto accumulator = doc->allocate_node(node_element, doc->allocate_string(k.Name().c_str()));
     auto listNodes = map.equal_range(k);
@@ -76,7 +60,8 @@ void FusionXML::UnifyAppend(const Key &k, NodeMultiMap& map, Node *c) {
   }
 }
 
-void FusionXML::UnionAtributes(const Node *a, Node *b) {
+template <typename S, typename C>
+void FusionXML<S, C>::UnionAtributes(const Node *a, Node *b) {
   NodeAtributeMap map;
   EnumerateAtributes(a, map);
   
@@ -89,28 +74,30 @@ void FusionXML::UnionAtributes(const Node *a, Node *b) {
   }
 }
 
-void FusionXML::EnumerateAtributes(const Node* node, NodeAtributeMap& unionMap) const {
+template <typename S, typename C>
+void FusionXML<S, C>::EnumerateAtributes(const Node* node, NodeAtributeMap& unionMap) const {
   if (node != nullptr) {
     for (Atribute* attr = node->first_attribute(); attr != nullptr; attr = attr->next_attribute()) {
-      if (Char* name = attr->name()) {
-        unionMap.emplace(std::wstring(name), attr);
+      if (C* name = attr->name()) {
+        unionMap.emplace(S(name), attr);
       }
     }
   }
 }
 
-void FusionXML::EnumerateNodes(const Node *_node, KeySet& keys, NodeMultiMap &map) const {
+template <typename S, typename C>
+void FusionXML<S, C>::EnumerateNodes(const Node *_node, KeySet& keys, NodeMultiMap &map) const {
   if (_node != nullptr) {
-    const Char* filter = idFilter.c_str();
+    const C* filter = idFilter.c_str();
     for (const Node* node = _node; node != nullptr; node = node->next_sibling()) {
       if (Atribute *attr = node->first_attribute(filter)) {
-        Key k(node->name(), attr->value(), true);
+        KeyType k(node->name(), attr->value(), true);
         keys.emplace(k);
         map.emplace(k, node);
       }
       else {
-        if (Char* name = node->name()) {
-          Key k(node->name());
+        if (C* name = node->name()) {
+          KeyType k(node->name());
           keys.emplace(k);
           map.emplace(k, node);
         }
