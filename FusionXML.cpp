@@ -53,6 +53,7 @@ void FusionXML<S, C>::UnifyAppend(const KeyType &k, NodeMultiMap& map, Node *c) 
     for (auto it = listNodes.first; it != listNodes.second; ++it) {
       if (auto node = it->second) {
         UnionAtributes(node, accumulator);
+        UnionValues(node, accumulator);
         Union(node->first_node(), accumulator->first_node(), accumulator);
       }
     }
@@ -61,6 +62,13 @@ void FusionXML<S, C>::UnifyAppend(const KeyType &k, NodeMultiMap& map, Node *c) 
   else {
     Append(k, map, c);
   }
+}
+
+template <typename S, typename C>
+void FusionXML<S, C>::UnionValues(const Node *a, Node *b) {
+    if (a->value_size() > 0) {
+      b->value(doc->allocate_string(a->value()));
+    }
 }
 
 template <typename S, typename C>

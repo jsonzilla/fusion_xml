@@ -34,6 +34,7 @@ private:
   void EnumerateNodes(const Node *node, KeySet& keys, NodeMultiMap &map) const;
   void Union(const Node *a, const Node *b, Node *c);
   void UnionAtributes(const Node *a, Node *b);
+  void UnionValues(const Node *a, Node *b);
 
   S idFilter;
   Document* doc = nullptr;
