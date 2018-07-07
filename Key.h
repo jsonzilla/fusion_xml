@@ -3,8 +3,6 @@
 
 #include <string>
 
-//#include <functional>
-
 template <typename S, typename C>
 class Key {
 public:

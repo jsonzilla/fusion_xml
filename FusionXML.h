@@ -5,7 +5,9 @@
 #include <unordered_set>
 #include <unordered_map>
 
-#include "rapidxml/rapidxml.hpp"
+#pragma warning(push, 0)  
+#include "rapidxml.hpp"
+#pragma warning(pop)  
 
 #include "Key.h"
 
