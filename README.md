@@ -1,7 +1,10 @@
 # fusion_xml
 Command line tool to merge two xml files
 
-**Only Windows Platform!**
+[![Build Status](https://travis-ci.org/0unit/fusion_xml.svg?branch=master)](https://travis-ci.org/0unit/fusion_xml)
+[![Build status](https://ci.appveyor.com/api/projects/status/emyqn1w3xc5tep8g?svg=true)](https://ci.appveyor.com/project/0unit/fusion-xml)
+
+
 
 Build
 ````
