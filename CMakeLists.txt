@@ -33,6 +33,14 @@ add_executable(tests
     )
 
 target_include_directories(
+    fusion_xml
+    PRIVATE
+    "./rapidxml"
+    )   
+
+target_include_directories(
+    tests
+    PRIVATE
     "./rapidxml"
     )   
 
