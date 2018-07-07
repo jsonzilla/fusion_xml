@@ -17,11 +17,6 @@ add_executable(fusion_xml
     ${headers}
     ${sources}
     ) 
-target_include_directories(
-    fusion_xml 
-    PRIVATE 
-    "./rapidxml"
-    )
 
 file(GLOB sourcesTests 
     "unit_fixture.cpp"
@@ -36,8 +31,8 @@ add_executable(tests
     ${headersTests} 
     ${sourcesTests} 
     )
+    
 target_include_directories(
-    tests PRIVATE 
     "./rapidxml"
     )   
 
