@@ -55,6 +55,21 @@ if (MSVC)
 
     # VS 2017 removed tr1
     add_definitions(-DGTEST_HAS_TR1_TUPLE=0)
+    
+    if ((CMAKE_VERSION GREATER 3.7.9) OR (CMAKE_VERSION EQUAL 3.7.9))
+    if (MSVC_IDE)
+        option(VS_ADD_NATIVE_VISUALIZERS "Configure project to use Visual Studio native visualizers" TRUE)
+    else()
+        set(VS_ADD_NATIVE_VISUALIZERS FALSE CACHE INTERNAL "Native visualizers are Visual Studio extension" FORCE)
+    endif()
+
+    # add natvis file to the library so it will automatically be loaded into Visual Studio
+    if(VS_ADD_NATIVE_VISUALIZERS)
+        target_sources(fusion_xml
+            ${CMAKE_CURRENT_SOURCE_DIR}/rapidxml.natvis
+        )
+    endif()
+endif()
 else()
     target_compile_options(fusion_xml PRIVATE -std=c++11 -g -fpermissive)
     target_compile_options(tests PRIVATE -std=c++11 -g -fpermissive)

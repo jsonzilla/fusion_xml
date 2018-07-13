@@ -10,7 +10,7 @@ void FusionXML<S, C>::Union(const Document& a, const Document& b, Document& c) {
   doc = nullptr;
   doc = &c;
   const Node *aNode = a.first_node();
-  const Node *bNode = b.first_node(); //deve encontrar primeiramente uma raiz em comum
+  const Node *bNode = b.first_node(); 
   auto root = doc->allocate_node(node_element, aNode->name());
   UnionAtributes(aNode, root);
   UnionAtributes(bNode, root);

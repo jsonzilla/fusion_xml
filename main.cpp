@@ -50,9 +50,9 @@ int main(int argc, char* argv[]) {
       fusion.Union(a, b, c);
       String xmlAsString;
       print(back_inserter(xmlAsString), c);
+        std::ofstream fileStream(outputC);
 
       if (outputC != empty) {
-        std::ofstream fileStream(outputC);
         fileStream << xmlAsString;
         fileStream.close();
       }

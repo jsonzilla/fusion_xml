@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+   <Type Name="rapidxml::xml_document&lt;*&gt;" Inheritable="true">
+     <DisplayString>docu: {m_name,sb}-{m_value,sb}</DisplayString>
+   </Type>
+   <Type Name="rapidxml::xml_node&lt;*&gt;" Inheritable="true">
+     <DisplayString>node: {m_name,sb}-{m_value,sb}</DisplayString>
+   </Type>
+   <Type Name="rapidxml::xml_base&lt;*&gt;" Inheritable="true">
+     <DisplayString>base: {m_name,sb}-{m_value,sb}</DisplayString>
+   </Type>
+   <Type Name="rapidxml::xml_attribute&lt;*&gt;" Inheritable="true">
+     <DisplayString>attr: {m_name,sb}-{m_value,sb}</DisplayString>
+   </Type>
+   <Type Name="rapidxml::memory_pool&lt;*&gt;" Inheritable="true">
+     <DisplayString>memory_pool:</DisplayString>
+   </Type>
+ </AutoVisualizer>
