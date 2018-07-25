@@ -1,15 +1,15 @@
 #ifndef FUSION_XML_FUSIONXML_H
 #define FUSION_XML_FUSIONXML_H
 
+#pragma warning(push, 0)
+#include "rapidxml.hpp"
+#pragma warning(pop)
+
+#include "Key.h"
+
 #include <string>
 #include <unordered_set>
 #include <unordered_map>
-
-#pragma warning(push, 0)  
-#include "rapidxml.hpp"
-#pragma warning(pop)  
-
-#include "Key.h"
 
 template <typename S, typename C>
 class FusionXML {

@@ -2,6 +2,7 @@
 #define FUSION_XML_KEY_H
 
 #include <string>
+#include <functional>
 
 template <typename S, typename C>
 class Key {
@@ -24,14 +25,14 @@ private:
 
 namespace std {
   template <typename S, typename  C>
-  struct hash<Key<S, C>> : public unary_function<Key<S, C>, size_t> {
+  struct hash<Key<S, C> > : public unary_function<Key<S, C>, size_t> {
     size_t operator()(const Key<S, C>& value) const {
       return std::hash<S>{}(value.Name() + value.ID());
     }
   };
 
   template <typename S, typename  C>
-  struct equal_to<Key<S, C>> : public unary_function<Key<S, C>, bool> {
+  struct equal_to<Key<S, C> > : public unary_function<Key<S, C>, bool> {
     bool operator()(const Key<S, C>& x, const Key<S, C>& y) const {
       return x == y;
     }

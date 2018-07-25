@@ -1,3 +1,5 @@
+#include "unit_fixture.h"
+
 #include "gtest/gtest.h"
 
 #pragma warning(push, 0)  
@@ -5,11 +7,9 @@
 #include "rapidxml_utils.hpp"
 #pragma waring(pop)
 
-#include "unit_fixture.h"
-
 using namespace rapidxml;
 
-#define SHOWINCONSOLE true
+constexpr auto SHOWINCONSOLE = true;
 
 //--------------------------------------------------------------------------------------------------------------------------
 
@@ -169,9 +169,9 @@ bool UnitFixture::EqualNode(
   Node* b
 )
 {
-  bool equal = true;
-  const bool aNulo = a == nullptr;
-  const bool bNulo = b == nullptr;
+  bool equal { true };
+  const bool aNulo { a == nullptr };
+  const bool bNulo { b == nullptr };
   if (aNulo ^ bNulo) {
     return false;
   }
@@ -208,7 +208,7 @@ bool UnitFixture::EqualAttibutes(
   Node* b
 )
 {
-  bool equal = true;
+  bool equal { true };
   Atribute* aAttr = a->first_attribute();
   Atribute* bAttr = b->first_attribute();
 
